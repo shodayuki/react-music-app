@@ -11,7 +11,9 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      keyword: ""
+      keyword: "",
+      resultType: "init",
+      items: []
     };
   }
 
@@ -31,11 +33,12 @@ export default class App extends React.Component {
           });
         } else {
           this.setState({
-            resultType: "success"
+            resultType: "success",
+            items: data.results
           });
         }
       })
-      .catch (err => {
+      .catch(err => {
         this.setState({
           resultType: "failure"
         });
@@ -47,11 +50,11 @@ export default class App extends React.Component {
       case "no_result":
         return <NoResult />;
       case "success":
-        return <Result />;
+        return <Result items={this.state.items} />;
       case "failure":
         return <ErrorPage />;
       default:
-        return <p>検索してみよう!</p>
+        return <p></p>;
     }
   }
 
@@ -62,11 +65,14 @@ export default class App extends React.Component {
         <div className="search-area">
           <input
             type="text"
+            placeholder="検索してみてみよう!"
             className="search-input"
             value={this.state.keyword}
             onChange={this.handleInputChange.bind(this)}
           />
-          <button className="search-button" onClick={this.onSearch.bind(this)}>検索</button>
+          <button className="search-button" onClick={this.onSearch.bind(this)}>
+            検索
+          </button>
         </div>
         {Comp}
       </div>
