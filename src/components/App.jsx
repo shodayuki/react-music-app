@@ -1,6 +1,9 @@
 import React from "react";
 import { getMusics } from "../api";
 
+import { fromEvent, timer } from "rxjs";
+import { debounce } from "rxjs/operators";
+
 // components
 import ErrorPage from "../components/modules/error";
 import NoResult from "../components/modules/no_result";
@@ -15,6 +18,18 @@ export default class App extends React.Component {
       resultType: "init",
       items: []
     };
+  }
+
+  componentDidMount() {
+    this.subscription = fromEvent(this.input, "input")
+      .pipe(debounce(() => timer(500)))
+      .subscribe(this.onSearch.bind(this));
+  }
+
+  componentWillMount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   handleInputChange(e) {
@@ -64,15 +79,13 @@ export default class App extends React.Component {
       <div>
         <div className="search-area">
           <input
+            ref={input => (this.input = input)}
             type="text"
             placeholder="検索してみてみよう!"
-            className="search-input"
+            className="search-input-rx"
             value={this.state.keyword}
             onChange={this.handleInputChange.bind(this)}
           />
-          <button className="search-button" onClick={this.onSearch.bind(this)}>
-            検索
-          </button>
         </div>
         {Comp}
       </div>

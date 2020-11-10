@@ -28,7 +28,7 @@ body, html {
   outline: none;
 }
 
-.search-area .search-input:focus::placeholder {
+.search-area .search-input-rx:focus::placeholder {
   color: transparent;
 }
 
