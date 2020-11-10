@@ -28,6 +28,10 @@ body, html {
   outline: none;
 }
 
+.search-area .search-input-rx:focus::placeholder {
+  color: transparent;
+}
+
 .search-area .search-input-rx {
   width: 100%;
   font-size: 1.6rem;
@@ -51,6 +55,19 @@ body, html {
 /**
  * 検索結果画面
  */
+
+.app-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.app-list__item {
+  margin-top: 20px;
+  width: 23%;
+  list-style: none;
+}
 
 .init-state-text {
   text-align: center;
